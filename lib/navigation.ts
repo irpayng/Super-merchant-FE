@@ -1,5 +1,5 @@
 import {
-  House,
+  LayoutGrid,
   Users,
   Calculator,
   Banknote,
@@ -29,10 +29,11 @@ export const navigation: NavSection[] = [
   {
     title: '',
     items: [
-      { name: 'Home', icon: 'House', url: '/dashboard' },
-      { name: 'Transactions', icon: 'ArrowLeftRight', url: '/transactions' },
+      { name: 'Dashboard', icon: 'LayoutGrid', url: '/dashboard' },
+      { name: 'All Merchants', icon: 'Users', url: '/merchants' },
+      { name: 'All Terminals', icon: 'Calculator', url: '/terminals' },
+      { name: 'All Transactions', icon: 'ArrowLeftRight', url: '/transactions' },
       { name: 'Settlements', icon: 'Banknote', url: '/settlements' },
-      { name: 'Terminals', icon: 'Calculator', url: '/terminals' },
       { name: 'Disputes', icon: 'Headset', url: '/disputes' },
       { name: 'Audit Trail', icon: 'FileSearchIcon', url: '/audit-trail' },
       { name: 'Roles and Privileges', icon: 'KeyRound', url: '/roles-and-privileges' },
@@ -41,7 +42,7 @@ export const navigation: NavSection[] = [
 ];
 
 export const iconMap = {
-  House,
+  LayoutGrid,
   Users,
   Banknote,
   Calculator,
