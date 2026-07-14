@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "../../../../infra"
+		},
+		{
+			"path": "../../../../tms-report"
+		},
+		{
+			"path": "../../../../tms-api"
+		},
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../irpay-mobile"
+		}
+	],
+	"settings": {
+		"typescript.autoClosingTags": false,
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}

@@ -1,0 +1,40 @@
+{
+	"folders": [
+		{
+			"path": "../Merchant-Backend"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../super-merchant"
+		},
+		{
+			"path": "../super-merchant-ui"
+		},
+		{
+			"path": "../tms-api"
+		},
+		{
+			"path": "../tms-frontend-framework"
+		},
+		{
+			"path": "../tms-report-java"
+		},
+		{
+			"path": "../tms-activity"
+		},
+		{
+			"path": "../tms-dispute"
+		},
+		{
+			"path": "../tms-transaction"
+		},
+		{
+			"path": "../tms-user"
+		},
+		{
+			"path": "../tms-wallet"
+		}
+	]
+}
