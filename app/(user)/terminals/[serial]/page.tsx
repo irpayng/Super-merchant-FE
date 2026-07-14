@@ -32,6 +32,8 @@ import {
   TerminalRowLike,
 } from '../(files)/terminal-row-actions';
 import { Skeleton } from '@/components/ui/skeleton';
+import CardTransactionsTable from '../../transactions/(components)/card/CardTransactionsTable';
+import { cn } from '@/lib/utils';
 
 /**
  * Standalone terminal detail page.
@@ -43,6 +45,12 @@ import { Skeleton } from '@/components/ui/skeleton';
  *
  * The slug is the terminal serial — it's stable, human-readable, and unique.
  */
+
+const tabs = [
+  { value: 'metrics_history', label: 'Metrics History' },
+  { value: 'transaction_history', label: 'Transaction History' },
+];
+
 export default function TerminalDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -59,6 +67,8 @@ export default function TerminalDetailPage() {
   const [unmapDialogOpen, setUnmapDialogOpen] = useState(false);
 
   const { rowActions, dialogs, reloadKey } = useTerminalRowActions();
+
+  const [activeTab, setActiveTab] = useState('metrics_history');
 
   // Load the terminal by serial. Re-runs when reloadKey bumps (after a
   // lock/unlock) so the header status and actions reflect the new state.
@@ -230,16 +240,44 @@ export default function TerminalDetailPage() {
 
       <TerminalLocationCard metric={latest} loaded={latestLoaded} />
 
-      <DataTable
-        title='Metrics History'
-        columns={metricsHistoryColumns}
-        fetchData={fetchHistory}
-        searchPlaceholder='Search…'
-        emptyStateText='No history yet'
-        emptyStateDescription='Snapshots from the device will land here every minute.'
-        hideSearchbar
-        pageSize={25}
-      />
+      <div className='mt-8'>
+        <div className='border-b border-border mb-0'>
+          <div className='flex gap-0'>
+            {tabs.map((tab) => (
+              <Button
+                key={tab.value}
+                variant='tab'
+                onClick={() => setActiveTab(tab.value)}
+                className={cn(
+                  'border-b-2',
+                  activeTab === tab.value
+                    ? 'border-[#FC6401] text-[#FC6401]'
+                    : 'border-transparent text-muted-foreground',
+                )}
+              >
+                {tab.label}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        <div className='mt-4'>
+          {activeTab === 'metrics_history' && (
+            <DataTable
+              title='Metrics History'
+              columns={metricsHistoryColumns}
+              fetchData={fetchHistory}
+              searchPlaceholder='Search…'
+              emptyStateText='No history yet'
+              emptyStateDescription='Snapshots from the device will land here every minute.'
+              hideSearchbar
+              pageSize={25}
+            />
+          )}
+
+          {activeTab === 'transaction_history' && <CardTransactionsTable />}
+        </div>
+      </div>
 
       <Dialog
         open={unmapDialogOpen}
