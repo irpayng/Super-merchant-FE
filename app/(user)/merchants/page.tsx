@@ -20,14 +20,8 @@ export default function AllMerchants() {
         title='All Merchants'
         columns={merchantCols}
         fetchData={fetchData}
-        // fetchDetails={fetchDetails}
-        // detailsView="slider"
-        detailsSliderWidth="2xl"
-        detailsRenderer={(data) => (
-          <TransactionDetails
-            data={data}
-          />
-        )}
+        detailsView='page'
+        detailsPageUrl={(row) => `/merchants/${encodeURIComponent(row.id)}`}
         emptyStateText="No merchants found"
         emptyStateDescription="Merchant records will appear here."
         filterConfig={filters}
