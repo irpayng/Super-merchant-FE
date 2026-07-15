@@ -1,10 +1,9 @@
 import { TableAvatarCell } from "@/components/ui/table-avatar-cell"
-import { formatCurrency } from "@/lib/currency"
 
-export const topMerchantCols = [
+export const merchantCols = [
   {
     key: "user.name",
-    label: "Agent",
+    label: "Merchant Name",
     render: (_: any, row: any) => {
       return (
         <TableAvatarCell
@@ -14,28 +13,35 @@ export const topMerchantCols = [
       )
     }
   },
-  // {
-  //   key: "amount",
-  //   label: "Amount", currency: "long" as const,
-  // },
   {
-    key: "referencex",
-    label: "Performance",
+    key: "reference",
+    label: "Merchant ID", copiable: true, truncate: true,
+  },
+  {
+    key: "amount",
+    label: "Contact",
     render: (_: any, row: any) => {
-
       return (
-        <div className="text-right">
-
-          <p className="mb-0! font-semibold text-sm">
-            {formatCurrency(500000)}
-          </p>
-
-          <p className="text-xs font-light">
-            5,000
-          </p>
-        </div>
+        <p>08012345678</p>
       )
     }
+  },
+  {
+    key: "status",
+    label: "Status", badge: true,
+  },
+  {
+    key: "amountss",
+    label: "Location",
+    render: (_: any, row: any) => {
+      return (
+        <p>13, Peterson Street, Victoria Island</p>
+      )
+    }
+  },
+  {
+    key: "created_at",
+    label: "Registration Date", date: true, truncate: true,
   },
 ]
 
