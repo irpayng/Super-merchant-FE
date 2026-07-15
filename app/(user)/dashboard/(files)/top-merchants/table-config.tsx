@@ -1,12 +1,46 @@
-export const txnStatColumns = [
+import { TableAvatarCell } from "@/components/ui/table-avatar-cell"
+import { formatCurrency } from "@/lib/currency"
+
+export const topMerchantCols = [
   {
     key: "user.name",
-    label: "Customer",
+    label: "Agent",
+    render: (_: any, row: any) => {
+      console.log('row', row)
+
+      return (
+        <TableAvatarCell
+          title={row?.user?.name || '-'}
+          subtitle={row.user?.email || '-'}
+        />
+
+
+      )
+    }
   },
-  { key: "amount", label: "Amount", currency: "long" as const },
-  { key: "referencex", label: "Terminal" },
-  { key: "created_at", label: "Date", date: true, truncate: true },
-  { key: "status", label: "Status", badge: true },
+  // {
+  //   key: "amount",
+  //   label: "Amount", currency: "long" as const,
+  // },
+  {
+    key: "referencex",
+    label: "Performance",
+    render: (_: any, row: any) => {
+
+      return (
+        <div className="text-right">
+
+          <p className="mb-0! font-semibold text-sm">
+            {formatCurrency(500000)}
+          </p>
+
+          <p className="text-xs font-light">
+            5,000
+          </p>
+        </div>
+      )
+    }
+  },
 ]
 
 export const transferColumns = [

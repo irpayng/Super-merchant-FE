@@ -1,11 +1,11 @@
 'use client'
 import BusinessOverview from './(files)/BusinessOverview'
 import Recents from './(files)/Recents'
-import ActiveAlerts from './(files)/ActiveAlerts'
 import Header from './(files)/Header'
 import { Suspense, useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { type DashboardData, getDashboardData } from '@/lib/dashboard-api'
+import RecentTransactions from './(files)/recent-transactions/RecentTransactions'
 
 const today = () => new Date().toISOString().split('T')[0]
 const thirtyDaysAgo = () => {
@@ -31,7 +31,6 @@ function DashboardContent() {
       })
       setData(res)
     } catch (e) {
-      console.error('[Dashboard] Failed to load data:', e)
       setData(null)
     } finally {
       setLoading(false)
@@ -47,7 +46,7 @@ function DashboardContent() {
       <Header />
       <BusinessOverview stats={data?.transaction_stats} loading={loading} />
       <Recents />
-      <ActiveAlerts alerts={data?.alerts} />
+      <RecentTransactions alerts={data?.alerts} />
     </div>
   )
 }
