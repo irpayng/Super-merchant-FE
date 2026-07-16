@@ -1,14 +1,14 @@
 "use client"
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, Dot, MoreHorizontal, Pen } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AccountInfo from './(files)/tabs/AccountInfo'
 import AgentTerminals from './(files)/tabs/terminals/Terminals'
-import Settlements from './(files)/tabs/wallets/Wallets'
-import TransactionsTable from './(files)/tabs/transactions/TransactionsTable'
+import TabbedTransactions from './(files)/tabs/transactions/TabbedTransactions'
 import SettlementsTab from './(files)/tabs/settlements/SettlementsTab'
+import { useSearchParams } from 'next/navigation'
 
 
 const tabs = [
@@ -20,11 +20,24 @@ const tabs = [
 
 const AgentDetailPage = () => {
   const [activeTab, setActiveTab] = useState('account');
+  const searchParams = useSearchParams();
+  const urlActiveTab = searchParams.get("active_tab");
+
+  useEffect(() => {
+
+    if (urlActiveTab?.length && urlActiveTab?.length > 0) {
+      const tabNames = tabs?.map((t: any) => t.value)
+
+      if (tabNames?.includes(urlActiveTab) && urlActiveTab !== activeTab)
+        setActiveTab(urlActiveTab)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlActiveTab])
 
   return (
     <div className='bg-white p-6'>
 
-      <Link href="/agents" className="flex items-center space-x-2">
+      <Link href="/merchants" className="flex items-center space-x-2">
         <ArrowLeft />
         <p className="mb-0 font-medium">
           Merchant Information
@@ -75,7 +88,7 @@ const AgentDetailPage = () => {
       </div>
 
       <div className="mt-8">
-        <Tabs defaultValue={activeTab} className='w-full'>
+        <Tabs defaultValue={activeTab} value={activeTab} className='w-full'>
           <TabsList className='bg-transparent font-medium text-sm flex gap-4'>
             {tabs.map((tab) => (
               <TabsTrigger
@@ -102,12 +115,12 @@ const AgentDetailPage = () => {
               <AgentTerminals />
             </TabsContent>
 
-            <TabsContent value='settlements'>
-              <SettlementsTab />
+            <TabsContent value='transactions'>
+              <TabbedTransactions />
             </TabsContent>
 
-            <TabsContent value='transactions'>
-              <TransactionsTable />
+            <TabsContent value='settlements'>
+              <SettlementsTab />
             </TabsContent>
 
           </div>

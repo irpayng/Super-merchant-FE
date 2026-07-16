@@ -10,8 +10,8 @@ import ReduxStoreProvider from './redux/ReduxStoreProvider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'IRPAY Merchant App',
-  description: 'IRPAY Merchant App',
+  title: 'IRPAY Super Merchant App',
+  description: 'IRPAY Super Merchant App',
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
         <meta name='robots' content='index, follow' />
         <meta name='googlebot' content='index, follow' />
         <meta name='google' content='notranslate' />
-        <title>IRPAY Merchant Appl</title>
+        <title>IRPAY Super Merchant Appl</title>
       </head>
       <body className={inter.className} suppressHydrationWarning>
         <ReduxStoreProvider>

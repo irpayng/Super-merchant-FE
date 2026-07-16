@@ -57,9 +57,6 @@ export default function TerminalDetailPage() {
   const pathname = usePathname()
   const serial = decodeURIComponent(String(params?.serial ?? ''));
 
-  console.log('params', params)
-  console.log('pathname', pathname)
-
   const terminalTransactionsRoute = `/merchants/${params?.id}?active_tab=terminals`
 
   const [terminal, setTerminal] = useState<Terminal | null>(null);
