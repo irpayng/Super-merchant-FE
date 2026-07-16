@@ -10,6 +10,7 @@ import {
   KeyRound,
   ShieldCheck,
   FileSearchIcon,
+  Hash,
 } from 'lucide-react';
 
 export interface NavItem {
@@ -32,11 +33,20 @@ export const navigation: NavSection[] = [
       { name: 'Dashboard', icon: 'LayoutGrid', url: '/dashboard' },
       { name: 'All Merchants', icon: 'Users', url: '/merchants' },
       { name: 'All Terminals', icon: 'Calculator', url: '/terminals' },
-      { name: 'All Transactions', icon: 'ArrowLeftRight', url: '/transactions' },
+      { name: 'All TIDs', icon: 'Hash', url: '/terminal-id' },
+      {
+        name: 'All Transactions',
+        icon: 'ArrowLeftRight',
+        url: '/transactions',
+      },
       { name: 'Settlements', icon: 'Banknote', url: '/settlements' },
       { name: 'Disputes', icon: 'Headset', url: '/disputes' },
       { name: 'Audit Trail', icon: 'FileSearchIcon', url: '/audit-trail' },
-      { name: 'Roles and Privileges', icon: 'KeyRound', url: '/roles-and-privileges' },
+      {
+        name: 'Roles and Privileges',
+        icon: 'KeyRound',
+        url: '/roles-and-privileges',
+      },
     ],
   },
 ];
@@ -53,4 +63,5 @@ export const iconMap = {
   KeyRound,
   ShieldCheck,
   FileSearchIcon,
+  Hash,
 };

@@ -8,6 +8,19 @@ let toastHandler:
   | null = null;
 let refreshHandler: (() => void) | null = null;
 
+let suppressToastDepth = 0;
+
+export async function runWithToastsSuppressed<T>(
+  fn: () => Promise<T>,
+): Promise<T> {
+  suppressToastDepth++;
+  try {
+    return await fn();
+  } finally {
+    suppressToastDepth--;
+  }
+}
+
 export function setToastHandler(
   handler: (message: string, type: 'success' | 'error' | 'info') => void,
 ) {
@@ -40,7 +53,11 @@ function handleAuthError() {
 
 export async function apiRequest<T>(
   endpoint: string,
-  options: Omit<RequestInit, 'body'> & { suppressToast?: boolean; body?: any; _retried?: boolean } = {},
+  options: Omit<RequestInit, 'body'> & {
+    suppressToast?: boolean;
+    body?: any;
+    _retried?: boolean;
+  } = {},
 ): Promise<T> {
   const token = await getToken();
   const method = options.method?.toUpperCase() || 'GET';
