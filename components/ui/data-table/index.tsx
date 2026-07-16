@@ -16,7 +16,8 @@ import { TablePagination } from './table-pagination';
 import { ActionMenu } from './action-menu';
 import { FilterSlider } from './filter-slider';
 import { Button } from '../button';
-import { setRefreshHandler } from '@/lib/api';
+import { runWithToastsSuppressed, setRefreshHandler } from '@/lib/api';
+import { useToast } from '../toast';
 
 interface Column<T> {
   key: string;
@@ -27,8 +28,8 @@ interface Column<T> {
   truncate?: boolean;
   currency?: 'long' | 'short';
   badge?:
-  | boolean
-  | ((value: any) => 'success' | 'warning' | 'error' | 'info' | 'default');
+    | boolean
+    | ((value: any) => 'success' | 'warning' | 'error' | 'info' | 'default');
   subtitle?: string;
 }
 
@@ -69,7 +70,10 @@ interface DataTableProps<T> {
     options?: { suppressToast?: boolean },
   ) => Promise<void>;
   updateData?: (id: string, data: any) => Promise<void>;
-  deleteData?: (id: string) => Promise<void>;
+  deleteData?: (
+    id: string,
+    options?: { suppressToast?: boolean },
+  ) => Promise<void>;
   fetchDetails?: (id: string) => Promise<any>;
   exportData?: (params?: {
     search?: string;
@@ -203,6 +207,7 @@ export function DataTable<T extends Record<string, any>>({
   } | null>(null);
   const [refreshing, setRefreshing] = React.useState(false);
   const filterFieldsRef = React.useRef(filterFields);
+  const { showToast } = useToast();
 
   const getTodayDate = () => {
     const today = new Date();
@@ -295,7 +300,7 @@ export function DataTable<T extends Record<string, any>>({
 
   React.useEffect(() => {
     setRefreshHandler(loadData);
-    return () => setRefreshHandler(() => { });
+    return () => setRefreshHandler(() => {});
   }, [loadData]);
 
   React.useEffect(() => {
@@ -410,10 +415,40 @@ export function DataTable<T extends Record<string, any>>({
   };
 
   const handleBulkDelete = async () => {
-    if (bulkDelete && selectedRows.size > 0) {
-      await bulkDelete(Array.from(selectedRows));
+    if (deleteData && selectedRows.size > 0) {
+      const ids = Array.from(selectedRows);
+      const results = await runWithToastsSuppressed(() =>
+        Promise.allSettled(
+          ids.map((id) => deleteData(id, { suppressToast: true })),
+        ),
+      );
+
+      const failures = results.filter((r) => r.status === 'rejected');
+      const successes = results.filter((r) => r.status === 'fulfilled');
+
+      if (failures.length > 0 && successes.length === 0) {
+        // All failed
+        showToast(`Failed to delete ${failures.length} item(s)`, 'error');
+      } else if (failures.length > 0) {
+        // Partial failure
+        showToast(
+          `Deleted ${successes.length} item(s), ${failures.length} failed`,
+          'error',
+        );
+      } else {
+        // All succeeded
+        showToast(
+          `${successes.length} item(s) deleted successfully`,
+          'success',
+        );
+      }
+
       setSelectedRows(new Set());
       setDeleteDialogOpen(false);
+      loadData();
+      // await bulkDelete(Array.from(selectedRows));
+      // setSelectedRows(new Set());
+      // setDeleteDialogOpen(false);
     } else if (deleteData && currentRow) {
       await handleDelete();
     }
@@ -438,7 +473,8 @@ export function DataTable<T extends Record<string, any>>({
   return (
     <div
       className={`bg-card rounded-xl border border-border space-y-4 
-        ${!title && 'pt-5'} ${(hideRefresh && hideSearchbar) && "!pt-0 !space-y-0"}`}>
+        ${!title && 'pt-5'} ${hideRefresh && hideSearchbar && '!pt-0 !space-y-0'}`}
+    >
       <TableHeader
         title={title}
         total={total}
