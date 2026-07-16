@@ -1,4 +1,4 @@
-import { Banknote, BriefcaseBusiness, ThumbsDown, ChartNoAxesColumn } from "lucide-react"
+import { Banknote, BriefcaseBusiness, ThumbsDown, ChartNoAxesColumn, Users } from "lucide-react"
 import { StatCard } from "@/components/ui/stat-card"
 import { StatsGrid } from "@/components/ui/stats-grid"
 
@@ -18,6 +18,13 @@ export function TransactionStats({ stats, loading: loadingProp }: TransactionSta
 
   const statCards = [
     {
+      title: "Total Merchants",
+      value: stats?.total?.count || 0,
+      icon: Users,
+      iconBgColor: "bg-orange-50",
+      iconColor: "text-orange-600"
+    },
+    {
       title: "Total Sales Volume",
       value: stats?.total?.count || 0,
       icon: ChartNoAxesColumn,
@@ -32,23 +39,23 @@ export function TransactionStats({ stats, loading: loadingProp }: TransactionSta
       iconColor: "text-purple-600"
     },
     {
-      title: "Failed Transactions",
+      title: "Total Settled Amount",
       value: stats?.failed?.total || 0,
       icon: BriefcaseBusiness,
       iconBgColor: "bg-blue-50",
       iconColor: "text-blue-600"
     },
     {
-      title: "Pending Transactions",
+      title: "Total Pending Settlements",
       value: stats?.processing?.total || 0,
       icon: ThumbsDown,
       iconBgColor: "bg-yellow-50",
       iconColor: "text-yellow-600"
-    }
+    },
   ]
 
   return (
-    <StatsGrid cols={4}>
+    <StatsGrid cols={5}>
       {statCards.map((stat) => (
         <StatCard
           key={stat.title}

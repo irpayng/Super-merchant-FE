@@ -23,6 +23,7 @@ interface DialogProps {
   onInputChange?: (value: string) => void;
   children?: React.ReactNode;
   requirePassword?: boolean;
+  confirmBg?: string;
 }
 
 export function Dialog({
@@ -41,6 +42,7 @@ export function Dialog({
   onInputChange,
   children,
   requirePassword,
+  confirmBg,
 }: DialogProps) {
   const [loading, setLoading] = React.useState(false);
   const [password, setPassword] = React.useState("")
@@ -158,7 +160,7 @@ export function Dialog({
             loading={loading}
             autoFocus
             disabled={requirePassword && password?.length < 5}
-            className='flex-1'
+            className={`flex-1 ${confirmBg || ""}`}
           >
             {confirmText}
           </Button>

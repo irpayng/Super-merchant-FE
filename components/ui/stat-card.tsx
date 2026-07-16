@@ -40,7 +40,7 @@ export function StatCard({
 }: StatCardProps) {
   if (loading) {
     return (
-      <Card className="p-6 rounded-2xl">
+      <Card className="p-3 rounded-2xl">
         <div className="space-y-4">
           <div className="h-11 w-11 rounded-full animate-pulse bg-muted" />
           <div>
@@ -64,17 +64,17 @@ export function StatCard({
   const changePositive = (change ?? 0) >= 0
 
   return (
-    <Card className="p-6 rounded-2xl">
+    <Card className="p-3 rounded-2xl">
       <div className="space-y-4">
         <div className="flex items-start justify-between">
-          <div className={`${iconBgColor} dark:bg-primary/10 p-3 rounded-full w-fit`}>
+          <div className={`${iconBgColor} dark:bg-primary/10 p-2.5 rounded-full w-fit`}>
             <Icon className={`w-5 h-5 ${iconColor} dark:text-primary`} />
           </div>
           {showChange && (
             <span
               className={`flect gap-0.5 text-xs font-medium px-2 py-1 rounded-full ${changePositive
-                  ? 'bg-green-50 dark:bg-green-500/10 text-green-600'
-                  : 'bg-red-50 dark:bg-red-500/10 text-red-600'
+                ? 'bg-green-50 dark:bg-green-500/10 text-green-600'
+                : 'bg-red-50 dark:bg-red-500/10 text-red-600'
                 }`}
             >
               {changePositive ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}

@@ -31,7 +31,7 @@ export function TableAvatarCell({
         }
       />
       <div className='text-left'>
-        <p className='font-medium'>{title}</p>
+        <p className='font-medium capitalize'>{title?.toLowerCase()}</p>
         {subtitle && <p className='text-sm text-gray-500'>{subtitle}</p>}
       </div>
     </div>
