@@ -120,7 +120,7 @@ export default function UsersTab() {
   const { showToast } = useToast();
 
   const { activeTableRow } = useDashboardProps();
-  const { isSuperAdmin } = usePermissions();
+  const { isPortalAdmin } = usePermissions();
   const { userEmail } = useToolkit();
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [adminDetails, setAdminDetails] = useState({
@@ -155,7 +155,7 @@ export default function UsersTab() {
         }
       },
     },
-    ...(isSuperAdmin && isSeparateEmail
+    ...(isPortalAdmin && isSeparateEmail
       ? [
           {
             label: adminIsActive ? 'Block' : 'Unblock',
@@ -177,7 +177,7 @@ export default function UsersTab() {
           },
         ]
       : []),
-    ...(isSuperAdmin
+    ...(isPortalAdmin
       ? [
           {
             label: 'Update Information',

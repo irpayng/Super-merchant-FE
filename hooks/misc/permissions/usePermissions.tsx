@@ -15,6 +15,9 @@ const usePermissions = () => {
 
   // Role-based checks (legacy)
   const isSuperAdmin = userRoles?.includes('super_admin');
+  const isBankAdmin = userRoles?.includes('bank_admin');
+  // Portal admin = super_admin OR bank_admin (both should see all pages)
+  const isPortalAdmin = isSuperAdmin || isBankAdmin;
   const isReconciliationAdmin = userRoles?.includes('reconciliation');
   const isCustomerCareAdmin = userRoles?.includes('customer_care');
   const isSettlementsAdmin = userRoles?.includes('settlement');
@@ -44,6 +47,8 @@ const usePermissions = () => {
     userRoles,
     userPrivileges,
     isSuperAdmin,
+    isBankAdmin,
+    isPortalAdmin,
     isReconciliationAdmin,
     isCustomerCareAdmin,
     isSettlementsAdmin,

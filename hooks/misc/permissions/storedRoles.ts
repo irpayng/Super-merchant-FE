@@ -28,6 +28,8 @@ const deriveStoredPrivileges = (): string[] => {
 const storedUserPrivileges: string[] = deriveStoredPrivileges();
 
 const isSuperAdmin = storedUserRoles.includes('super_admin');
+const isBankAdmin = storedUserRoles.includes('bank_admin');
+const isPortalAdmin = isSuperAdmin || isBankAdmin;
 const isOperationsAdmin = storedUserRoles.includes('operations');
 const isCustomerCareAdmin = storedUserRoles.includes('customer_care');
 
@@ -38,6 +40,8 @@ export {
   storedUserRoles,
   storedUserPrivileges,
   isSuperAdmin,
+  isBankAdmin,
+  isPortalAdmin,
   isOperationsAdmin,
   isCustomerCareAdmin,
   hasStoredPrivilege,
